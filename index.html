@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Daily Update Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Team Dashboard</p>
+          <h1>Daily Update Tracker</h1>
+        </div>
+        <div class="header-actions">
+          <button id="importBtn" class="secondary-btn">Import Excel</button>
+          <button id="exportBtn" class="primary-btn">Export Excel</button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel form-panel">
+          <h2>Add Team Update</h2>
+
+          <form id="dailyForm">
+            <div class="grid two-col">
+              <label>
+                <span>Date</span>
+                <input type="date" id="date" required />
+              </label>
+              <label>
+                <span>Team Member</span>
+                <input type="text" id="member" placeholder="e.g. Priya" required />
+              </label>
+            </div>
+
+            <div class="grid two-col">
+              <label>
+                <span>Project / Sprint</span>
+                <input type="text" id="project" placeholder="e.g. Client Portal" required />
+              </label>
+              <label>
+                <span>Status</span>
+                <select id="status">
+                  <option value="On Track">On Track</option>
+                  <option value="At Risk">At Risk</option>
+                  <option value="Blocked">Blocked</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              <span>Today's Work</span>
+              <textarea id="workDone" rows="3" placeholder="List tasks completed today"></textarea>
+            </label>
+
+            <label>
+              <span>Blockers / Issues</span>
+              <textarea id="blockers" rows="2" placeholder="Note blockers, dependencies, or risks"></textarea>
+            </label>
+
+            <label>
+              <span>Next Steps</span>
+              <textarea id="nextSteps" rows="2" placeholder="Planned work for tomorrow"></textarea>
+            </label>
+
+            <div class="grid two-col">
+              <label>
+                <span>Hours Spent</span>
+                <input type="number" id="hours" min="0" step="0.5" placeholder="6.5" />
+              </label>
+              <label>
+                <span>Priority</span>
+                <select id="priority">
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                  <option value="Critical">Critical</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="primary-btn">Save Update</button>
+              <button type="button" id="resetBtn" class="secondary-btn">Clear Form</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel table-panel">
+          <div class="panel-header">
+            <h2>Recent Updates</h2>
+            <div class="filters">
+              <input type="text" id="searchInput" placeholder="Search member or project" />
+              <select id="statusFilter">
+                <option value="All">All Status</option>
+                <option value="On Track">On Track</option>
+                <option value="At Risk">At Risk</option>
+                <option value="Blocked">Blocked</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Member</th>
+                  <th>Project</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Hours</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <input type="file" id="excelFileInput" accept=".xlsx,.xls,.csv" hidden />
+
+    <script src="script.js"></script>
+  </body>
+</html>
